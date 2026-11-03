@@ -175,6 +175,24 @@ def top_n_by_rating(movies, n=3):
     return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
 
 
+def count_by_genre(movies):
+    genre_counts = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            genre_counts[genre] = genre_counts.get(genre, 0) + 1
+    return genre_counts
+
+
+def actor_filmography(movies):
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            if actor not in filmography:
+                filmography[actor] = []
+            filmography[actor].append(movie["title"])
+    return filmography
+
+
 def main():
     print("Фильмы без жанра comedy:")
     print_non_comedy_movies(movies)
@@ -194,6 +212,17 @@ def main():
 
     print("\nНазвания по убыванию рейтинга:", titles_sorted_by_rating(movies))
     print("Топ-3 по рейтингу:", top_n_by_rating(movies))
+
+    print("\nКоличество фильмов по жанрам:", count_by_genre(movies))
+    print("Фильмография актеров:", actor_filmography(movies))
+
+    avg_rating = average_rating(movies)
+    above_average_ratings = {
+        movie["title"]: movie["rating"]
+        for movie in movies
+        if movie["rating"] > avg_rating
+    }
+    print("Фильмы с рейтингом выше среднего:", above_average_ratings)
 
 
 if __name__ == "__main__":
