@@ -165,6 +165,16 @@ def format_report_line(movie):
     )
 
 
+def titles_sorted_by_rating(movies):
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [movie["title"] for movie in sorted_movies]
+
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
+
+
 def main():
     print("Фильмы без жанра comedy:")
     print_non_comedy_movies(movies)
@@ -181,6 +191,9 @@ def main():
     print("\nНормализованное название:", normalize_title("silent hours"))
     print("Слаг:", make_slug("Silent Hours"))
     print("Строка отчета:", format_report_line(movies[7]))
+
+    print("\nНазвания по убыванию рейтинга:", titles_sorted_by_rating(movies))
+    print("Топ-3 по рейтингу:", top_n_by_rating(movies))
 
 
 if __name__ == "__main__":
