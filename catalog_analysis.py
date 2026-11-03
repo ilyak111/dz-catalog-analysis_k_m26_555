@@ -193,6 +193,21 @@ def actor_filmography(movies):
     return filmography
 
 
+def all_genres(movies):
+    genres = set()
+    for movie in movies:
+        genres.update(movie["genres"])
+    return genres
+
+
+def common_actors(movie1, movie2):
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+
+def genres_only_in_one(movies_a, movies_b):
+    return all_genres(movies_a) - all_genres(movies_b)
+
+
 def main():
     print("Фильмы без жанра comedy:")
     print_non_comedy_movies(movies)
@@ -223,6 +238,12 @@ def main():
         if movie["rating"] > avg_rating
     }
     print("Фильмы с рейтингом выше среднего:", above_average_ratings)
+
+    print("\nВсе жанры каталога:", all_genres(movies))
+    print("Общие актеры двух фильмов:", common_actors(movies[0], movies[3]))
+    print(
+        "Жанры только в первом каталоге:", genres_only_in_one(movies[5:6], movies[:5])
+    )
 
 
 if __name__ == "__main__":
